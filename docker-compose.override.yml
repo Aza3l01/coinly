@@ -1,14 +1,19 @@
 services:
   backend:
+    build: ./backend
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
-    command: npm run dev   # assumes you added a "dev" script with nodemon
+    command: npm run dev
+    ports:
+      - "5000:5000"
 
   frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
     volumes:
       - ./frontend:/app
       - /app/node_modules
-    command: npm run dev   # Vite or CRA dev server
     ports:
-      - "5173:5173"        # expose vite dev port
+      - "5173:5173"

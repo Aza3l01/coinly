@@ -5,12 +5,11 @@ services:
     restart: always
     ports:
       - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-    # Optional: initialize with root user
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo-data:/data/db
 
   backend:
     build: ./backend
@@ -25,11 +24,11 @@ services:
       - mongo
 
   frontend:
-    build: ./frontend
+    build: ./frontend   # uses the production Dockerfile by default
     container_name: coinly-frontend
     restart: always
     ports:
-      - "3000:80" # host:container (nginx serves on port 80)
+      - "3000:80"
     depends_on:
       - backend
 
